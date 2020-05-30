@@ -173,7 +173,8 @@
               }).catch(() => {
                 this.loading = false
             })
-            alert('submit!');
+            alert('submit!')
+            this.$router.replace('/first')
           } else {
             console.log('参数错误');
             return false;
@@ -189,7 +190,7 @@
       },
       created() {
         axios.post({
-          url: ''
+          url: 'http://localhost:8082/home'
         }).then(res => {
           // console.log(res)
           this.reslut = res;

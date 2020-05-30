@@ -27,7 +27,7 @@ new Vue({
 
 //封装request模块
 import {request} from "./api/requset";
-import {removeResizeListener} from "element-ui/src/utils/resize-event";
+
 
 request({
   url: '/home'
