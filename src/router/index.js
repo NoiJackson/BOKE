@@ -19,10 +19,16 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
     {
-      path: "/login",
-      name: "login",
-      component: () => import('../boot/Login')
-    }
+      path: "/book",
+      name: "Book",
+      component: () => import('../components/Book')
+    },
+    {
+      path: "/first",
+      name: "First",
+      component: () => import('../components/First')
+    },
+
 ]
 
 const router = new VueRouter({
@@ -30,7 +36,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-/**
- * 123
- */
+
 export default router

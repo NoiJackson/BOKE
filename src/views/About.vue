@@ -22,7 +22,7 @@
         </el-form-item>
 
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" placeholder="确认密码" name="password"></el-input>
+          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="on" placeholder="确认密码" name="password"></el-input>
         </el-form-item>
 
         <el-form-item
@@ -81,9 +81,6 @@
       };
 
       return {
-        //导航条
-        activeIndex: '1',
-        activeIndex2: '1',
 
         //注册表
         ruleForm: {
@@ -124,20 +121,10 @@
 
       resetForm(formName) {
         this.$refs.ruleForm.resetFields();
-      },
-
+      }
 
     },
-    created() {
-      axios({
-        url: ''
-      }).then(res => {
-        // console.log(res)
-        this.reslut = res;
-      }).catch(error => {
-        console.log(error);
-      })
-    }
+
   }
 </script>
 

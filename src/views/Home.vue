@@ -22,8 +22,20 @@
             <el-menu-item index="1-3">情书</el-menu-item>
           </el-submenu>
 
-            <el-menu-item index="2" class="firstPage">首页</el-menu-item>
-            <el-menu-item index="/book"><a href="/book" target="_blank" style="text-decoration-line: none">个人中心</a></el-menu-item>
+            <el-menu-item index="/first">
+              <a href="/first"
+                 target="_blank"
+                 style="text-decoration-line: none">
+                首页
+              </a>
+            </el-menu-item>
+            <el-menu-item index="/book">/
+              <a href="/book"
+                 target="_blank"
+                 style="text-decoration-line: none">
+                个人中心
+              </a>
+            </el-menu-item>
         </el-menu>
       </div>
       </el-header>
@@ -74,27 +86,20 @@
 
                 <br><br>
                 <div class="sign-in">
-                    <el-button style="background: Transparent; border:none;" @click="setId">注册</el-button>
-                    <el-button style="background: Transparent; border:none;">忘记密码</el-button>
+                    <el-button style="background: Transparent;
+                    border:none;"
+                               @click="setId">
+                      注册
+                    </el-button>
+                    <el-button style="background: Transparent;
+                    border:none;">
+                      忘记密码
+                    </el-button>
                 </div>
             </el-form>
           </div>
         </el-main>
       </el-container>
-
-    <!-- 底部-->
-<!--    <el-container>-->
-<!--      <el-footer>-->
-<!--        <div class="footer">-->
-<!--          <span class="contact">-->
-<!--            <el-link href="#" target="_blank">联系我们</el-link>-->
-<!--          </span>-->
-<!--          <span class="help">-->
-<!--            <el-link type="info">帮助</el-link>-->
-<!--          </span>-->
-<!--        </div>-->
-<!--      </el-footer>-->
-<!--    </el-container>-->
 
 
   </div>
@@ -156,7 +161,7 @@
                 let code =  response.data.code;
                 if (code === 200) {
                   this.$router.push({
-                    path: '/firstpage',
+                    path: '/first',
                     // query: {data: response.data.data}
                   });
                 }else {
@@ -176,11 +181,21 @@
         });
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields()
+        this.$refs.ruleForm.resetFields()
       },
       setId() {
         // alert('ok')
         this.$router.replace('/about')
+      },
+      created() {
+        axios.post({
+          url: ''
+        }).then(res => {
+          // console.log(res)
+          this.reslut = res;
+        }).catch(error => {
+          console.log(error);
+        })
       }
     }
   }
@@ -241,7 +256,7 @@
   /*}*/
 
   .submit {
-    margin-left: 60%;
+    margin-left: 50%;
   }
 
   /*.contact {*/
