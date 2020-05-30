@@ -1,21 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-
-//路由
 import router from './router'
-
-//vuex
 import store from './store'
-
-//element ui框架
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
-
-//axios
 import axios from 'axios'
-Vue.prototype.axios = axios
-
+// import j
 
 Vue.config.productionTip = false
 
@@ -25,4 +13,6 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-
+axios({
+  url: 'http://localhost:8082/dudu/hello'
+})
