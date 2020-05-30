@@ -48,6 +48,7 @@
           <div class="login">
             <h1 class="title">从此君王不早朝</h1>
 
+            //表单
             <el-form
                 :model="ruleForm"
                 status-icon
@@ -56,6 +57,7 @@
                 label-width="100px"
                 class="demo-ruleForm">
 
+              //用户名
               <el-form-item label="用户名" prop="username">
                 <el-input
                     v-model="ruleForm.username"
@@ -63,15 +65,20 @@
                     name="username"></el-input>
               </el-form-item>
 
-              <el-form-item label="密码" prop="pass">
+              //密码
+              <el-form-item label="密码" prop="password">
                 <el-input
                     type="password"
-                    v-model="ruleForm.pass"
+                    v-model="ruleForm.password"
                     autocomplete="off"
                     placeholder="请输入密码"
-                    name="password" @keyup.enter.native="submitForm"></el-input>
+                    name="password"
+                    maxlength="16"
+                    minlength="6"
+                    @keyup.enter.native="submitForm"></el-input>
               </el-form-item>
 
+              //登录按钮
               <el-form-item>
                 <div class="submit">
                   <el-button
@@ -80,22 +87,26 @@
                       :loading="loading">
                     登录
                   </el-button>
+
+                  //重置按钮
                   <el-button @click="resetForm('ruleForm')">重置</el-button>
                 </div>
               </el-form-item>
 
                 <br><br>
-                <div class="sign-in">
-                    <el-button style="background: Transparent;
-                    border:none;"
-                               @click="setId">
-                      注册
-                    </el-button>
-                    <el-button style="background: Transparent;
-                    border:none;">
-                      忘记密码
-                    </el-button>
-                </div>
+
+                //注册按钮
+              <div class="sign-in">
+                <el-button style="background: Transparent;
+                   border:none;"
+                           @click="setId">
+                  注册
+                </el-button>
+                <el-button style="background: Transparent;
+                   border:none;">
+                  忘记密码
+                </el-button>
+              </div>
             </el-form>
           </div>
         </el-main>
@@ -106,8 +117,11 @@
 </template>
 
 <script>
+  // import axios from 'axios'
+
   export default {
     data() {
+      //检查用户名不为空
       const checkUsername = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('用户名不能为空'));
@@ -115,12 +129,13 @@
         callback();
       };
 
+      //检查密码
       const validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
           if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
+            this.$refs.ruleForm.validateField('请检查密码');
           }
           callback();
         }
@@ -130,11 +145,11 @@
         activeIndex: this.$route.path,
 
         ruleForm: {
-          pass: '',
-          username: ''
+          username: '',
+          password: ''
         },
         rules: {
-          pass: [
+          password: [
             { validator: validatePass, trigger: 'blur' }
           ],
           username: [
@@ -162,19 +177,19 @@
                 if (code === 200) {
                   this.$router.push({
                     path: '/first',
-                    // query: {data: response.data.data}
+                    query: {data: response.data.data}
                   });
                 }else {
                   this.$router.push({
-                    path: '/book'
-                    // query: {message: response.data.message}
+                    path: '/book',
+                    query: {message: response.data.message}
                   })
                 }
               }).catch(() => {
                 this.loading = false
             })
-            alert('submit!')
-            this.$router.replace('/first')
+            // alert('submit!')
+            this.$router.push('/first')
           } else {
             console.log('参数错误');
             return false;
@@ -187,18 +202,18 @@
       setId() {
         // alert('ok')
         this.$router.replace('/about')
-      },
-      created() {
-        axios.post({
-          url: 'http://localhost:8082/home'
-        }).then(res => {
-          // console.log(res)
-          this.reslut = res;
-        }).catch(error => {
-          console.log(error);
-        })
       }
-    }
+    },
+    // created() {
+    //   axios.post({
+    //     url: 'http://localhost:8082/home'
+    //   }).then(res => {
+    //     // console.log(res)
+    //     this. result = res;
+    //   }).catch(error => {
+    //     console.log(error);
+    //   })
+    // }
   }
 </script>
 

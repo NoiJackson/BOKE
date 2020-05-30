@@ -12,10 +12,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
-//axios
+
 import axios from 'axios'
 Vue.prototype.axios = axios
-
+//封装request模块
+import {request} from "./api/requset";
 
 Vue.config.productionTip = false
 
@@ -24,9 +25,6 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-//封装request模块
-import {request} from "./api/requset";
 
 
 request({

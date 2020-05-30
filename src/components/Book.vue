@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h2>哎呀，出错了</h2>
+    <h3>{{msg}}</h3>
     <table>
       <tr>
         <td>编号</td>
@@ -36,8 +38,9 @@
             id: 3,
             name: '嘟嘟',
             author: '可爱'
-          },
-        ]
+          }
+        ],
+        msg: this.$route.query.data
       }
     }
   }
