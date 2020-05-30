@@ -148,26 +148,26 @@
       submitForm(formName) {
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
-            // this.loading = true;
-            // this.$store
-            //   .dispatch('Login', this.ruleForm)
-            //   .then(response => {
-            //     this.loading = false;
-            //     let code =  response.data.code;
-            //     if (code === 200) {
-            //       this.$router.push({
-            //         path: '/firstpage',
-            //         // query: {data: response.data.data}
-            //       });
-            //     }else {
-            //       this.$router.push({
-            //         path: '/book'
-            //         // query: {message: response.data.message}
-            //       })
-            //     }
-            //   }).catch(() => {
-            //     this.loading = false
-            // })
+            this.loading = true;
+            this.$store
+              .dispatch('Login', this.ruleForm)
+              .then(response => {
+                this.loading = false;
+                let code =  response.data.code;
+                if (code === 200) {
+                  this.$router.push({
+                    path: '/firstpage',
+                    // query: {data: response.data.data}
+                  });
+                }else {
+                  this.$router.push({
+                    path: '/book'
+                    // query: {message: response.data.message}
+                  })
+                }
+              }).catch(() => {
+                this.loading = false
+            })
             alert('submit!');
           } else {
             console.log('参数错误');

@@ -128,13 +128,16 @@
 
 
     },
-    // created() {
-    //   axios.get('http://192.168.0.101:8082/about').then(res => {
-    //     // console.log(res)
-    //     this.reslut = res;
-    //
-    //   })
-    // }
+    created() {
+      axios({
+        url: ''
+      }).then(res => {
+        // console.log(res)
+        this.reslut = res;
+      }).catch(error => {
+        console.log(error);
+      })
+    }
   }
 </script>
 

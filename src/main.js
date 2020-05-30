@@ -25,4 +25,16 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
+//封装request模块
+import {request} from "./api/requset";
+import {removeResizeListener} from "element-ui/src/utils/resize-event";
+
+request({
+  url: '/home'
+},res => {
+  console.log(res);
+},err => {
+  console.log(err);
+})
+
 
