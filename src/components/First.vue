@@ -16,7 +16,7 @@
       }
     },
     created() {
-      this.msg = this.$route.query.message
+      this.msg = '嘟嘟是最漂亮的小仙女'
     }
   }
 </script>

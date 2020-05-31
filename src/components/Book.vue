@@ -40,7 +40,7 @@
             author: '可爱'
           }
         ],
-        msg: this.$route.query.data
+        msg: '请重新登录'
       }
     }
   }

@@ -48,7 +48,7 @@
           <div class="login">
             <h1 class="title">从此君王不早朝</h1>
 
-            //表单
+<!--            //表单-->
             <el-form
                 :model="ruleForm"
                 status-icon
@@ -57,7 +57,7 @@
                 label-width="100px"
                 class="demo-ruleForm">
 
-              //用户名
+<!--              //用户名-->
               <el-form-item label="用户名" prop="username">
                 <el-input
                     v-model="ruleForm.username"
@@ -65,7 +65,7 @@
                     name="username"></el-input>
               </el-form-item>
 
-              //密码
+<!--              //密码-->
               <el-form-item label="密码" prop="password">
                 <el-input
                     type="password"
@@ -74,31 +74,28 @@
                     placeholder="请输入密码"
                     name="password"
                     maxlength="16"
-                    minlength="6"
-                    @keyup.enter.native="submitForm"></el-input>
+                    minlength="6"></el-input>
               </el-form-item>
 
-              //登录按钮
+<!--              //登录按钮-->
               <el-form-item>
                 <div class="submit">
                   <el-button
                       type="primary"
-                      @click.native.prevent="submitForm('ruleForm')"
-                      :loading="loading">
+                      @click="submitForm(ruleForm)">
                     登录
                   </el-button>
 
-                  //重置按钮
-                  <el-button @click="resetForm('ruleForm')">重置</el-button>
+<!--                  //重置按钮-->
+                  <el-button @click="resetForm(ruleForm)">重置</el-button>
                 </div>
               </el-form-item>
 
                 <br><br>
 
-                //注册按钮
+<!--                //注册按钮-->
               <div class="sign-in">
-                <el-button style="background: Transparent;
-                   border:none;"
+                <el-button style="background: Transparent;border:none;"
                            @click="setId">
                   注册
                 </el-button>
@@ -117,103 +114,82 @@
 </template>
 
 <script>
-  // import axios from 'axios'
+  //导入axios
+  import axios  from 'axios'
 
   export default {
     data() {
-      //检查用户名不为空
-      const checkUsername = (rule, value, callback) => {
+      //检验用户名不为空的函数
+      const checkUsername = (rules, value, callback) => {
         if (!value) {
-          return callback(new Error('用户名不能为空'));
+          return callback(new Error('用户名不能为空'))
         }
-        callback();
+        callback()
       };
 
-      //检查密码
-      const validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('请检查密码');
-          }
-          callback();
-        }
-      };
       return {
+        //导航条的设置
         activeIndex1: '1',
         activeIndex: this.$route.path,
 
+        //用户名和表单的data
         ruleForm: {
           username: '',
           password: ''
         },
+
+        //失去焦点-检验用户名不为空
         rules: {
-          password: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
           username: [
-            { validator: checkUsername, trigger: 'blur' }
+            {validator: checkUsername, trigger: 'blur'},
           ]
-        },
-        loading: false
-      };
-    },
+        }
+      }
+
+      },
     methods: {
-      handleSelect(key, keyPath) {
-       // return  this.$route.path
-
+      //导航条默认选中函数
+      handleSelect() {
+        console.log(key, keyPath)
       },
 
-      submitForm(formName) {
-        this.$refs.ruleForm.validate((valid) => {
-          if (valid) {
-            this.loading = true;
-            this.$store
-              .dispatch('Login', this.ruleForm)
-              .then(response => {
-                this.loading = false;
-                let code =  response.data.code;
-                if (code === 200) {
-                  this.$router.push({
-                    path: '/first',
-                    query: {data: response.data.data}
-                  });
-                }else {
-                  this.$router.push({
-                    path: '/book',
-                    query: {message: response.data.message}
-                  })
-                }
-              }).catch(() => {
-                this.loading = false
-            })
-            // alert('submit!')
+      //登录规则函数
+      submitForm() {
+        //发送post请求
+        axios.post('http://localhost:8082/home', {
+          username: this.username,
+          password: this.password,
+
+          //跨域
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+
+        }).then((dat) => {
+          //处理异步函数,判断数据与收据库中是否一致
+          if (dat.data === '0') {
+            alert('用户不存在，请重新输入')
+          }else if (dat.data === '1') {
+            alert('登录失败，账号或者密码错误')
+          }else if (dat.data === '2') {
+            //登录成功，页面跳转
             this.$router.push('/first')
-          } else {
-            console.log('参数错误');
-            return false;
           }
-        });
+        }).catch((error) => {
+          //传输错误
+          console.log('传输失败');
+        })
       },
-      resetForm(formName) {
+
+      //重置按钮对应的函数
+      resetForm() {
         this.$refs.ruleForm.resetFields()
       },
+
+      //注册按钮点击函数
       setId() {
-        // alert('ok')
         this.$router.replace('/about')
       }
     },
-    // created() {
-    //   axios.post({
-    //     url: 'http://localhost:8082/home'
-    //   }).then(res => {
-    //     // console.log(res)
-    //     this. result = res;
-    //   }).catch(error => {
-    //     console.log(error);
-    //   })
-    // }
+
   }
 </script>
 
